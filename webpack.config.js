@@ -1,7 +1,14 @@
 const merge = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+const path = require("path");
+const glob = require("glob");
+
 const parts = require("./webpack.parts");
+
+const PATHS = {
+    app: path.join(__dirname, "src"),
+};
 
 const commonConfig = merge([
     {
@@ -15,7 +22,10 @@ const commonConfig = merge([
 
 const productionConfig = merge([
     parts.extractCSS({
-        use: "css-loader",
+        use: ["css-loader", parts.autoprefix()],
+    }),
+    parts.purifyCSS({
+        paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
     }),
 ]);
 

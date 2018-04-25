@@ -1,4 +1,9 @@
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const PurifyCSSPlugin = require("purifycss-webpack");
+
+exports.purifyCSS = ({ paths }) => ({
+    plugins: [new PurifyCSSPlugin({ paths })],
+});
 
 exports.extractCSS = ({ include, exclude, use }) => {
     // Output extracted CSS to a file
@@ -48,5 +53,12 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
                 use: ["style-loader", "css-loader"],
             },
         ],
+    },
+});
+
+exports.autoprefix = () => ({
+    loader: "postcss-loader",
+    options: {
+        plugins: () => [require("autoprefixer")()],
     },
 });
