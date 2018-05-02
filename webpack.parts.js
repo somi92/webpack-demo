@@ -1,5 +1,9 @@
+const webpack = require("webpack");
+
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const GitRevisionPlugin = require("git-revision-webpack-plugin");
 
 exports.purifyCSS = ({ paths }) => ({
     plugins: [new PurifyCSSPlugin({ paths })],
@@ -90,4 +94,20 @@ exports.loadJavaScript = ({ include, exclude } = {}) => ({
             },
         ],
     },
+});
+
+exports.generateSourceMaps = ({ type }) => ({
+    devtool: type,
+});
+
+exports.clean = path => ({
+    plugins: [new CleanWebpackPlugin([path])],
+});
+
+exports.attachRevision = () => ({
+    plugins: [
+        new webpack.BannerPlugin({
+            banner: new GitRevisionPlugin().version(),
+        }),
+    ],
 });
