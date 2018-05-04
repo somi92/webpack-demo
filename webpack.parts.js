@@ -39,12 +39,12 @@ exports.extractCSS = ({ include, exclude, use }) => {
     };
 };
 
-exports.devServer = ({ host, port } = {}) => ({
+exports.devServer = ({ host, port, open } = {}) => ({
     devServer: {
         stats: "errors-only",
         host, // Defaults to `localhost`
         port, // Defaults to 8080
-        open: true,
+        open,
         overlay: true,
     },
 });
@@ -130,3 +130,12 @@ exports.minifyCSS = ({ options }) => ({
         }),
     ],
 });
+
+exports.setFreeVariable = (key, value) => {
+    const env = {};
+    env[key] = JSON.stringify(value);
+
+    return {
+        plugins: [new webpack.DefinePlugin(env)],
+    };
+};

@@ -20,6 +20,7 @@ const commonConfig = merge([
         ],
     },
     parts.loadJavaScript({ include: PATHS.app }),
+    parts.setFreeVariable("HELLO", "hello from config"),
 ]);
 
 const productionConfig = merge([
@@ -69,6 +70,7 @@ const developmentConfig = merge([
         // Customize host/port here if needed
         host: process.env.HOST,
         port: process.env.PORT,
+        open: false,
     }),
     parts.loadCSS(),
     parts.loadImages(),
