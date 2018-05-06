@@ -17,6 +17,8 @@ exports.extractCSS = ({ include, exclude, use }) => {
     const plugin = new ExtractTextPlugin({
         // `allChunks` is needed to extract from extracted chunks as well.
         allChunks: true,
+        // FIX: 'filename: "[name].[contenthash:4].css"' not working,
+        // see: https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/763
         filename: "[name].css",
     });
 
