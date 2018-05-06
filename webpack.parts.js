@@ -1,6 +1,6 @@
 const webpack = require("webpack");
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
@@ -14,13 +14,15 @@ exports.purifyCSS = ({ paths }) => ({
 
 exports.extractCSS = ({ include, exclude, use }) => {
     // Output extracted CSS to a file
-    const plugin = new ExtractTextPlugin({
+    // Switched to mini-css-extract-plugin from extract-text-webpack-plugin due to [contenthash] issue
+    // see: https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/763
+    const plugin = new MiniCssExtractPlugin({
         // `allChunks` is needed to extract from extracted chunks as well.
         allChunks: true,
-        // FIX: 'filename: "[name].[contenthash:4].css"' not working,
-        // see: https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/763
-        filename: "[name].css",
+        filename: "[name].[contenthash].css",
     });
+
+    const useLoaders = [MiniCssExtractPlugin.loader].concat(use);
 
     return {
         module: {
@@ -29,11 +31,7 @@ exports.extractCSS = ({ include, exclude, use }) => {
                     test: /\.css$/,
                     include,
                     exclude,
-
-                    use: plugin.extract({
-                        use,
-                        fallback: "style-loader",
-                    }),
+                    use: useLoaders
                 },
             ],
         },
