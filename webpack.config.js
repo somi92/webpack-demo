@@ -1,5 +1,4 @@
 const merge = require("webpack-merge");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const path = require("path");
 const glob = require("glob");
@@ -12,13 +11,6 @@ const PATHS = {
 };
 
 const commonConfig = merge([
-    {
-        plugins: [
-            new HtmlWebpackPlugin({
-                title: "Webpack demo",
-            }),
-        ],
-    },
     parts.loadJavaScript({ include: PATHS.app }),
     parts.setFreeVariable("HELLO", "hello from config"),
 ]);
@@ -35,6 +27,8 @@ const productionConfig = merge([
         output: {
             chunkFilename: "[name].[chunkhash].js",
             filename: "[name].[chunkhash].js",
+            // Needed for code splitting to work in nested paths
+            publicPath: "/",
         },
     },
     parts.clean(PATHS.build),
@@ -94,8 +88,24 @@ const developmentConfig = merge([
 ]);
 
 module.exports = mode => {
-    if (mode === "production") {
-        return merge(commonConfig, productionConfig, { mode });
-    }
-    return merge(commonConfig, developmentConfig, { mode });
+    const pages = [
+        parts.page({
+            title: "Webpack demo",
+            entry: {
+                app: PATHS.app,
+            },
+            chunks: ["app", "manifest", "vendor"],
+        }),
+        parts.page({
+            title: "Another demo",
+            path: "another",
+            entry: {
+                another: path.join(PATHS.app, "another.js"),
+            },
+            chunks: ["another", "manifest", "vendor"],
+        }),
+    ];
+    const config = mode === "production" ? productionConfig : developmentConfig;
+
+    return merge([commonConfig, config, { mode }].concat(pages));
 };

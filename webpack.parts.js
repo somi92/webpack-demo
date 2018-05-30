@@ -7,6 +7,7 @@ const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 exports.purifyCSS = ({ paths }) => ({
     plugins: [new PurifyCSSPlugin({ paths })],
@@ -139,3 +140,24 @@ exports.setFreeVariable = (key, value) => {
         plugins: [new webpack.DefinePlugin(env)],
     };
 };
+
+exports.page = ({
+    path = "",
+    template = require.resolve(
+        "html-webpack-plugin/default_index.ejs"
+    ),
+    title,
+    entry,
+    chunks,
+} = {}) => ({
+    entry,
+    plugins: [
+        new HtmlWebpackPlugin({
+            chunks,
+            filename: `${path && path + "/"}index.html`,
+            template,
+            title,
+        }),
+    ],
+});
+

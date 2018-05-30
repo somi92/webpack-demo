@@ -19,7 +19,7 @@
         "byName": {},
         "bySource": {},
         "usedIds": [
-          1
+          0
         ]
       }
     }
@@ -93,7 +93,10 @@
       "css node_modules/css-loader/index.js!node_modules/postcss-loader/lib/index.js??ref--5-2!src/main.css 0": 7,
       "node_modules/mini-css-extract-plugin/dist/loader.js!node_modules/css-loader/index.js!node_modules/postcss-loader/lib/index.js??ref--5-2!src/main.css": 8,
       "css node_modules/css-loader/index.js!node_modules/postcss-loader/lib/index.js??ref--5-2!node_modules/purecss/build/pure-min.css 0": 18,
-      "node_modules/mini-css-extract-plugin/dist/loader.js!node_modules/css-loader/index.js!node_modules/postcss-loader/lib/index.js??ref--5-2!node_modules/purecss/build/pure-min.css": 19
+      "node_modules/mini-css-extract-plugin/dist/loader.js!node_modules/css-loader/index.js!node_modules/postcss-loader/lib/index.js??ref--5-2!node_modules/purecss/build/pure-min.css": 19,
+      "node_modules/babel-loader/lib/index.js!src/component.js": 6,
+      "node_modules/babel-loader/lib/index.js!src/index.js 1fbb3b9294c898f90564f6a21319ad22": 20,
+      "node_modules/babel-loader/lib/index.js!src/another.js": 21
     },
     "usedIds": {
       "0": 0,
@@ -115,14 +118,18 @@
       "16": 16,
       "17": 17,
       "18": 18,
-      "19": 19
+      "19": 19,
+      "20": 20,
+      "21": 21
     }
   },
   "chunks": {
     "byName": {
       "manifest": 1,
       "vendor": 2,
-      "main": 3
+      "main": 3,
+      "app": 4,
+      "another": 3
     },
     "bySource": {
       "0 node_modules/babel-loader/lib/index.js!src/component.js ./lazy": 0
@@ -131,7 +138,8 @@
       0,
       1,
       2,
-      3
+      3,
+      4
     ]
   },
   "mini-css-extract-plugin node_modules/css-loader/index.js!node_modules/postcss-loader/lib/index.js??ref--5-2!src/main.css": [
@@ -177,6 +185,31 @@
         "byName": {
           "mini-css-extract-plugin": 0
         },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "html-webpack-plugin for \"another/index.html\"": [
+    {
+      "modules": {
+        "byIdentifier": {
+          "node_modules/webpack/buildin/module.js": 0,
+          "node_modules/webpack/buildin/global.js": 1,
+          "node_modules/lodash/lodash.js": 2,
+          "node_modules/html-webpack-plugin/lib/loader.js!node_modules/html-webpack-plugin/default_index.ejs": 3
+        },
+        "usedIds": {
+          "0": 0,
+          "1": 1,
+          "2": 2,
+          "3": 3
+        }
+      },
+      "chunks": {
+        "byName": {},
         "bySource": {},
         "usedIds": [
           0
